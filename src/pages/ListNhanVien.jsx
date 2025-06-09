@@ -46,8 +46,7 @@ const ListNhanVien = () => {
     onSubmit: (values) => {
       const date = new Date();
       let ramdomNumber = Math.floor(Math.random() * 1000);
-      // console.log(ramdomNumber);
-      // let time = date.getTime();
+
       let data = {
         ...values,
         maNhanVien: ramdomNumber,
@@ -75,10 +74,6 @@ const ListNhanVien = () => {
     }
   }, [isModalThemMoi]);
 
-  // hàm fetchData để gọi api lấy danh sách tất cả nhân viên
-  // sử dụng Axios để gửi request GET đến api
-  // sau khi nhận được dữ liệu sẽ cập nhật state dsNhanVien
-  // state dsNhanVien sẽ được sử dụng để hiển thị danh sách nhân viên trong bảng
   const fetchData = async () => {
     const result = await Axios.get(
       "https://apitraining.cybersoft.edu.vn/api/QuanLyNhanVienApi/LayDanhSachNhanVien"
@@ -87,23 +82,20 @@ const ListNhanVien = () => {
     setDsNhanVien(result.data);
   };
 
-  // sử dụng useEffect để gọi hàm fetchData khi component được mount
-  // điều này giúp đảm bảo rằng danh sách nhân viên sẽ được cập nhật khi component được hiển thị lần đầu tiên
   useEffect(() => {
     fetchData();
   }, []);
 
-  // hàm render danh sách nhân viên
-  // sử dụng map để lặp qua danh sách nhân viên và hiển thị thông tin
-  // mỗi nhân viên sẽ có mã nhân viên, tên nhân viên, lương cơ bản và nút xem chi tiết
-  // khi click vào nút xem chi tiết sẽ gọi hàm xemChiTietNhanVien để lấy thông tin chi tiết của nhân viên đó
   const renderDsNhanVien = () => {
     return dsNhanVien.map((item, index) => {
       return (
         <tr key={index}>
           <td>{item.maNhanVien}</td>
           <td>{item.tenNhanVien}</td>
+          <td>{item.chucVu}</td>
+          <td>{item.heSoChucVu}</td>
           <td>{item.luongCoBan}</td>
+          <td>{item.soGioLamTrongThang}</td>
           <td>
             <button
               type="button"
@@ -136,9 +128,6 @@ const ListNhanVien = () => {
     });
   };
 
-  // hàm xem chi tiết nhân viên
-  // khi click vào nút xem chi tiết sẽ gọi api lấy thông tin nhân viên theo mã nhân viên
-  // sau đó hiển thị modal chi tiết nhân viên
   const xemChiTietNhanVien = async (params) => {
     const result = await Axios.get(
       "https://apitraining.cybersoft.edu.vn/api/QuanLyNhanVienApi/LayThongTinNhanVien?maNhanVien=" +
@@ -181,7 +170,10 @@ const ListNhanVien = () => {
           <tr>
             <th scope="col">Mã Nhân Viên</th>
             <th scope="col">Tên Nhân Viên</th>
+            <th scope="col">Chức vụ</th>
+            <th scope="col">Hs chức vụ</th>
             <th scope="col">Lương Cơ Bản</th>
+            <th scope="col">Số Giờ Làm</th>
             <th scope="col">Hành Động</th>
           </tr>
         </thead>
