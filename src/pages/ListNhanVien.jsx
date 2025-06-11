@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 const ListNhanVien = () => {
   const [dsNhanVien, setDsNhanVien] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalXemChiTiet, setModalXemChiTiet] = useState(false);
   const [chiTietNhanVien, setChiTietNhanVien] = useState();
   const [thongTinCapNhap, setThongTinCapNhap] = useState();
 
@@ -66,7 +67,6 @@ const ListNhanVien = () => {
     },
   });
 
-  // Và nên có thêm trong useEffect:
   useEffect(() => {
     if (isModalThemMoi) {
       console.log(formikThemMoi);
@@ -100,7 +100,7 @@ const ListNhanVien = () => {
             <button
               type="button"
               onClick={() => {
-                xemChiTietNhanVien(item.maNhanVien);
+                xemChiTietNhanVien(item);
               }}
               className="btn btn-info"
             >
@@ -131,13 +131,14 @@ const ListNhanVien = () => {
   const xemChiTietNhanVien = async (params) => {
     const result = await Axios.get(
       "https://apitraining.cybersoft.edu.vn/api/QuanLyNhanVienApi/LayThongTinNhanVien?maNhanVien=" +
-        params
+        params.maNhanVien
     );
     setChiTietNhanVien(result.data);
-    setIsModalOpen(true);
+    setModalXemChiTiet(true);
   };
 
   const updateNhanVien = async (params) => {
+    console.log(params);
     setThongTinCapNhap(params);
     setIsModalOpen(true);
   };
@@ -184,12 +185,12 @@ const ListNhanVien = () => {
       <Modal
         title="Chi tiết nhân viên"
         closable={{ "aria-label": "Custom Close Button" }}
-        open={false}
+        open={isModalXemChiTiet}
         onOk={() => {
-          setIsModalOpen(false);
+          setModalXemChiTiet(false);
         }}
         onCancel={() => {
-          setIsModalOpen(false);
+          setModalXemChiTiet(false);
         }}
       >
         <p>Mã Nhân Viên: {chiTietNhanVien?.maNhanVien}</p>
