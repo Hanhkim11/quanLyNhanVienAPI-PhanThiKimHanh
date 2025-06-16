@@ -118,6 +118,7 @@ const DanhSachNhanVien = () => {
                 <p>Mã nhân viên: {chiTietNhanVien?.maNhanVien}</p>
                 <p>Tên nhân viên: {chiTietNhanVien?.tenNhanVien}</p>
                 <p>Chức vụ: {chiTietNhanVien?.chucVu}</p>
+                <p>Hs chức vụ: {chiTietNhanVien?.heSoChucVu}</p>
                 <p>Lương cơ bản: {chiTietNhanVien?.luongCoBan}</p>
                 <p>
                   Số giờ làm trong tháng: {chiTietNhanVien?.soGioLamTrongThang}
